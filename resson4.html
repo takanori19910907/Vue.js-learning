@@ -1,0 +1,59 @@
+<!DOCTYPEhtml>
+<html>
+<head>
+  <metacharset="UTF8">
+  <title>Vue.jssample</title>
+  <linkrel="stylesheet"href="style.css">
+  <script
+    src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js">
+  </script>
+</head>
+<body>
+
+  <div id="practice-field">
+    <input v-model.lazy="myName" placeholder="名前">
+    <p>私は {{ myName }} です </p>
+    <textarea v-model.trim="myText"></textarea>
+    <p>自己紹介: {{ myText }} </p>
+    <p>文字数: {{ myText.length }} </p>
+    <input v-model.number="myNumber" type="number">
+    <p>100を足して表示[{{ 100 + myNumber }}]</p>
+    <label><input type="checkbox" value="red" v-model="myChecks" >赤</label>
+    <label><input type="checkbox" value="green" v-model="myChecks" >緑</label>
+    <label><input type="checkbox" value="blue" v-model="myChecks" >青</label>
+    <p>選択したのは {{ myChecks }}です</p>
+    <label><input type="radio" value="ヒトカゲ" v-model="myPokemon" >ヒトカゲ</label>
+    <label><input type="radio" value="ゼニガメ" v-model="myPokemon" >ゼニガメ</label>
+    <label><input type="radio" value="フシギダネ" v-model="myPokemon" >フシギダネ</label>
+    <p>{{ myPokemon }}!君に決めた! </p>
+
+    <select v-model="myColor" multiple style="width:150px">
+      <option disabled value="">色を選んでください</option>
+      <option>red</option>
+      <option>green</option>
+      <option>blue</option>
+      <option>orange</option>
+      <option>brown</option>
+    </select>
+    <p>選択したのは {{ myColor }} です</p>
+    <label><input type="checkbox" v-model="myAgree">同意します</label>
+    <button v-bind:disabled="!myAgree">送信</button>
+
+
+
+  </div>
+  <script>
+    new Vue({
+      el:"#practice-field",
+      data: {
+        myName: "",
+        myText: "",
+        myNumber: 0,
+        myChecks:[],
+        myPokemon:"ヒトカゲ",
+        myAgree:false,
+        myColor:[]
+      }
+    })
+  </script>
+</body>
