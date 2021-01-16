@@ -1,0 +1,42 @@
+<!DOCTYPEhtml>
+<html>
+  <head>
+    <metacharset="UTF8">
+    <title>Vue.jssample</title>
+    <linkrel="stylesheet"href="style.css">
+    <script
+      src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js">
+    </script>
+  </head>
+  <body>
+    <div id="vue-practice">
+      <p>{{ count }}</p>
+      <!-- ①HTMLでEL要素(button)の操作によりvueイベントが発生 -->
+      <button v-on:click="countUp(3)">3増やす</button>
+      <button v-on:click="countUp(10)">10増やす</button>
+      <button v-on:click="countUp(100)">100増やす</button>
+      <input v-on:keyUp.enter="showAlert" v-model="mytext">
+      <p>{{ myText }}</p>
+    </div>
+
+    <script>
+      <!-- ③countUpメソッド内のthis.countを探すためにvueインスタンスを参照 -->
+      new Vue({
+        el: "#vue-practice",
+        data: { count: 0 },
+      <!-- ④vueインスタンスに変更を加えてブラウザに反映する -->
+
+
+      <!-- ②v-on:clickで呼び出されたcountUpメソッドを実行 -->
+        methods: {
+          countUp: function(value) {
+            this.count += value;
+          }
+          showAlert: function() {
+            alert("Enterキーを押しました");
+          }
+        }
+      })
+    </script>
+  </body>
+</html>
