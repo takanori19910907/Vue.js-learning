@@ -1,0 +1,73 @@
+<!DOCTYPEhtml>
+<html>
+  <head>
+    <metacharset="UTF8">
+    <title>Vue.jssample</title>
+    <linkrel="stylesheet"href="style.css">
+    <script
+      src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js">
+    </script>
+  </head>
+  <body>
+
+    <div id="vue-practice">
+      <label><input type="checkbox" v-model="myVisible">表示する</label>
+      <p v-if="myVisible">チェックボックスがONです</p>
+      <p v-else>チェックボックスがOFFです</p>
+      <!-- ①初期状態がtrueのbutton要素に対して、clickイベントiineを設定 -->
+      <!-- ②clickによりiineイベントが発生した時に、関数の処理でbutton要素のboolean属性が反転する -->
+      <!-- ③boolean属性がfalseになったことで、v-ifディレクティブから無視されるようになり、button要素が表示されなくなる -->
+      <button v-if="isShow" v-on:click="iine">いいね</button>
+
+      <!-- 配列myAllayの中身を1つずつ取り出し、変数itemとしてリストに表示する -->
+      <ul>
+        <li v-for="item in myArray">{{ item }}</li>
+        <li v-for="(item,index) in myArray">{{ index + 1 }}:{{ item }}</li>
+        <li v-for="item in objArray">{{ item.name }} | {{ item.price + "円" }}</li>
+        <li v-for="n in 10"> {{ n }}x6={{ n * 6 }}</li>
+      </ul>
+
+      <h3>注目されている言語ランキング</h3>
+      <table>
+        <thead>
+          <!-- 配列 headerからランキングの項目一覧を取り出して変数 titleとして表示 -->
+          <th v-for="title in header">{{ title }}</th>
+        </thead>
+        <tbody>
+          <!-- 配列 rankingからランキングの対象列を取り出して変数 lineとして表示 -->
+          <tr v-for="line in ranking">
+            <td v-for="lang in line">{{ lang }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <script>
+      new Vue({
+        el: "#vue-practice",
+        data: {
+          myVisible: false,
+          isShow: true,
+          myArray: ["ジャムパン","あんぱん" ],
+          objArray: [
+          {name:"クロワッサン", price: 500},
+          {name:"カレーパン", price: 400}
+          ],
+          header: [
+          "プログラミング言語",2017,2018,2019,2020
+          ],
+          ranking: [
+          ["Ruby",1,2,3,4],
+          ["PHP",4,2,3,1],
+          ["Go",3,4,2,1],
+          ["Python",1,3,4,2]
+          ]
+        },
+        methods: {
+          iine: function() {
+            this.isShow = false
+          }
+        }
+      })
+    </script>
+  </body>
+</html>
