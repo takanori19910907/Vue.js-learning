@@ -1,0 +1,69 @@
+<!DOCTYPEhtml>
+<html>
+  <head>
+    <metacharset="UTF8">
+    <title>Vue.jssample</title>
+    <linkrel="stylesheet"href="style.css">
+    <script
+      src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js">
+    </script>
+    <script type="text/javascript"src="https://www.gstatic.com/charts/loader.js"></script>
+  </head>
+  <body>
+
+    <h3>好きなランチ投票</h3>
+    <div id="vue-chart" style="height: 500px;"></div>
+    <div id="vue-field">
+      <!-- オブジェクトデータからheader以外の配列を表示(indexが0より大きい要素を繰り返し表示) -->
+      <li v-for="(item, index) in dataArray" v-if="index > 0">
+        {{ item[0] }} : {{ item[1] }}
+      <!-- buttonをクリックしたら,その要素のindexを引数に持った状態でaddOneメソッドを探す -->
+        <button v-on:click="addOne(index)">一票</button>
+      </li>
+    </div>
+
+    <script>
+      var orgdata = [
+      ["種類","得票数"],
+      ["幕内",3],
+      ["カルビ",2],
+      ["焼うどん",4],
+      ["冷やし中華",1]
+      ];
+
+      google.charts.load("current",{packages: ["corechart"]});
+      google.charts.setOnLoadCallback(drawBasic);
+
+      function drawBasic() {
+        var data =
+        google.visualization.arrayToDataTable(orgdata);
+        var options = {title: "好きなランチ","is3D": true};
+        var chart = new
+        google.visualization.PieChart(
+        document.getElementById("vue-chart")
+        );
+        chart.draw(data, options);
+      }
+
+      new Vue({
+        el: "#vue-field",
+        data: {
+          dataArray: orgdata
+        },
+        <!-- buttonを押した要素の得票数を増加するメソッド -->
+        methods: {
+          addOne: function(val) {
+            <!-- ①dataArrayとしてセットされたorgdataオブジェクト内のval(配列要素)を変数objに取り出す -->
+            var obj = this.dataArray[val];
+            <!-- ②obj(配列)の第2引数に1を追加 -->
+            obj[1]++;
+            <!-- ③本来のdataArray[val]を指定し、追加したobj(配列)の値と差し替える -->
+            this.dataArray.splice(val, 1, obj);
+            <!-- ④chartを再描画する -->
+            drawBasic();
+          }
+        }
+      });
+    </script>
+  </body>
+</html>
