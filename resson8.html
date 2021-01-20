@@ -1,0 +1,76 @@
+<!DOCTYPEhtml>
+<html>
+  <head>
+    <metacharset="UTF8">
+    <title>Vue.jssample</title>
+    <linkrel="stylesheet"href="style.css">
+    <script
+      src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js">
+    </script>
+  </head>
+  <body>
+    <div id="vue-practice">
+      <ul>
+        <li v-for="item1 in myList">{{ item1 }}</li>
+      </ul>
+      <!-- buttonをクリックするとclickイベントが発生、それぞれのディレクティブ内のメソッドを探しに行く -->
+      <button v-on:click="addLast">末尾に追加</button><br>
+      <button v-on:click="addFirst">先頭に追加</button><br>
+      <button v-on:click="changeObj(1)">２つ目を変更</button><br>
+      <button v-on:click="deleteObj(2)">3つ目を削除</button>
+
+      <ul>
+        <li v-for="item2 in myArray">{{ item2 }}</li>
+      </ul>
+      <!-- buttonをクリックするとclickイベントが発生、sortdataメソッドを探しに行く -->
+      <button v-on:click="sortData(myArray)">ソートする</button><br>
+
+      <ul>
+        <li v-for="item3 in myNum">{{ item3 }}</li>
+      </ul>
+      <button v-on:click="evenNum()">偶数だけ表示</button><br>
+    </div>
+    <script>
+      new Vue ({
+        el: "#vue-practice",
+        data: {
+          myList: ["1つ目","２つ目","３つ目","４つ目","５つ目"],
+          myArray: ["one","two","three","four","five"],
+          myNum: [1,2,3,4,5]
+        },
+        methods: {
+          // pushメソッドで末尾に要素を追加する
+          addLast: function(){
+            this.myList.push("末尾に追加");
+          },
+          // spliceメソッドで先頭に要素を追加
+          addFirst: function(index){
+            this.myList.splice(index,0,"先頭に追加");
+          },
+          // spliceメソッドでindex1番目(2つ目)の要素の中身を変更
+          changeObj: function(index){
+            this.myList.splice(index,1,"2番目を変更");
+          },
+          // spliceメソッドでindex2番目(3つ目)の要素を削除
+          deleteObj: function(index){
+            this.myList.splice(index,1);
+          },
+
+          // sortdataメソッドに引数としてmyArrayの配列を渡し、sortメソッドで並べ替えてreturnする
+          sortData: function(listdata){
+            listdata.sort(function(a,b){
+              return (a < b ? -1 : 1 );
+            });
+          },
+          evenNum: function(){
+            this.myNum = this.myNum.filter(
+              function(value){
+              return value % 2 == 0;
+              }
+            );
+          }
+        }
+      })
+    </script>
+  </body>
+</html>
