@@ -1,0 +1,96 @@
+<!DOCTYPEhtml>
+<html>
+  <head>
+    <metacharset="UTF8">
+    <title>Vue.jssample</title>
+    <linkrel="stylesheet"href="style.css">
+    <script
+      src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js">
+    </script>
+    <script type="text/javascript"src="https://www.gstatic.com/charts/loader.js"></script>
+  </head>
+  <body>
+    <div id="vue-practice">
+      <input v-model.number="price" type="number">円<br>
+      <input v-model.number="count" type="number">個
+      <p>合計 : {{ sum }}円</p>
+      <p>消費税込みの金額 : {{ taxIncluded }}円</p>
+
+      <textarea v-model="myText"></textarea>
+      <p v-bind:style="{ color: computedColor } ">残り{{ remaining }}文字です</p>
+      <ul>
+        <input v-model="findWord">
+        <li v-for="item in findItems">{{ item }}</li>
+      </ul>
+      <p v-bind:style="{ backgroundColor:mixColor }"/>{{ mixColor }}</p>
+      <input type="range"v-model="R"min="0"max="255"/><br>
+      <input type="range"v-model="G"min="0"max="255"/><br>
+      <input type="range"v-model="B"min="0"max="255"/><br>
+
+    </div>
+
+    <script>
+      new Vue ({
+        el: "#vue-practice",
+        data: {
+          price: 100,
+          count: 0,
+          myText: "テストメッセージ",
+          findWord: "",
+          items: [
+          "桃太郎","花咲じいさん","浦島太郎","かぐや姫","かちかち山"
+          ],
+          R:255,
+          G:150,
+          B:100
+        },
+
+        computed: {
+          <!-- data内のプロパティが変更された時にcomputed(算出プロパティ)が動く -->
+          sum: function() {
+            return this.price * this.count;
+          },
+
+          <!-- 関数で計算された値を『taxIncluded』プロパティとしてHTMLに出力する -->
+          taxIncluded: function() {
+            return this.sum * 1.08;
+          },
+
+          remaining: function() {
+            return 30 - this.myText.length;
+          },
+
+          computedColor: function() {
+            col = "green";
+            if (this.remaining < 20) {
+              col = "orange";
+            }
+            if (this.remaining < 1) {
+              col = "red";
+            }
+            return col;
+          },
+
+          <!-- findWordプロパティが変更された時にfindItemsプロパティが動く -->
+          findItems: function() {
+            if (this.findWord) {
+              <!-- windWordが入力されているとき、 -->
+              <!-- ②filterメソッドを使って、関数で絞り込んだ配列だけ取り出してfindItemsに入れる -->
+              return this.items.filter(function(value) {
+
+              <!-- ①indexOfメソッド、配列itemsを対象に this.findWordの値と同じものがないか検索 -->
+                return (value.indexOf(this.findWord) > -1);
+              }, this);
+            } else {
+              return this.items;
+            }
+          },
+          mixColor: function() {
+            var ans = "RGB("+this.R+","+this.G+","+this.B+")";
+            return ans;
+          }
+        }
+      })
+    </script>
+  </body>
+</html>
