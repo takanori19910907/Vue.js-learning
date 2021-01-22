@@ -1,0 +1,54 @@
+<!DOCTYPEhtml>
+<html>
+  <head>
+    <metacharset="UTF8">
+    <title>Vue.jssample</title>
+    <linkrel="stylesheet"href="style.css">
+    <script
+      src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js">
+    </script>
+  </head>
+
+  <body>
+    <div id="vue-practice">
+      <p>あと {{ restSec }}秒</p>
+      <button v-on:click="startTimer()">START</button>
+    </div>
+
+    <script>
+      new Vue ({
+        el: "#vue-practice",
+        data: {
+          restSec: 5,
+          timerObj: null,
+          myNumber: 0,
+          tweenedNumber: 0
+        },
+
+        methods: {
+        // ボタンクリック後5秒でアラートが表示されるメソッド
+          startTimer: function() {
+
+        // オブジェクトの初期化のためrestSecプロパティを再定義する
+            this.restSec = 5;
+
+        // timerObjプロパティにsetIntervalメソッドをセット。1000ミリ秒(1秒)毎にrestSecを1つ減らす
+            this.timerObj = setInterval(() => {
+              this.restSec--
+            }, 1000)
+          }
+        },
+
+        watch: {
+          // restSecを監視し、値が0以下になったらalertが表示される
+          restSec: function() {
+            if (this.restSec <= 0) {
+              alert("制限時間です");
+              clearInterval(this.timerObj);
+            }
+          }
+        }
+      })
+    </script>
+  </body>
+</html>
