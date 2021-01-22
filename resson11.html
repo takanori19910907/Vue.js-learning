@@ -1,0 +1,43 @@
+<!DOCTYPEhtml>
+<html>
+  <head>
+    <metacharset="UTF8">
+    <title>Vue.jssample</title>
+    <linkrel="stylesheet"href="style.css">
+    <script
+      src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js">
+    </script>
+    <script type="text/javascript"src="https://www.gstatic.com/charts/loader.js"></script>
+  </head>
+  <body>
+    <div id="vue-practice">
+      <p>禁止文字は「{{ forbiddenText }}」</p>
+      <textarea v-model="inputText"></textarea>
+    </div>
+
+    <script>
+      new Vue ({
+        el: "#vue-practice",
+        data: {
+          forbiddenText: "悪口",
+          inputText: "テキストをここに入力"
+        },
+        watch: {
+          <!-- 監視するプロパティをセットする -->
+          inputText: function() {
+
+          <!-- indexOfメソッドで、textareaの入力値が禁止ワードに含まれていないか検索 -->
+          <!-- 検索結果なし = -1, ある場合0以上の値を返し、変数posに入れる -->
+            var pos = this.inputText.indexOf(this.forbiddenText);
+            if (pos >= 0 ) {
+              alert(this.forbiddenText + "、ダメ、ゼッタイ" );
+
+          <!-- 入力値から禁止文字を削除する -->
+              this.inputText = this.inputText.substr(0, pos);
+            }
+          }
+        }
+      })
+    </script>
+  </body>
+</html>
