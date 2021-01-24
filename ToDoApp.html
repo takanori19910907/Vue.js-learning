@@ -1,0 +1,66 @@
+<!DOCTYPEhtml>
+<html>
+  <head>
+    <metacharset="UTF8">
+    <title>Vue.js ToDoApp</title>
+    <linkrel="stylesheet"href="style.css">
+    <script
+      src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js">
+    </script>
+  </head>
+
+  <body>
+    <div id="todo-field">
+      <div v-for="todo in todolist">
+        <label>
+          <input type="checkbox" v-model="todo.done">
+          <span v-bind:class="{donestyle:todo.done}">{{ todo.text }} </span>
+        </label>
+      </div>
+      <input type="text" v-model.trim="addItem" placeholder="追加アイテムを入力" v-on:keyup.enter="addList">
+      <p><button v-on:click="cleanToDo">処理済みを削除</button></p>
+      <p>{{ remaining }} / {{ todolist.length }}件処理する</p>
+    </div>
+
+    <style>
+      .donestyle {
+        text-decoration: line-through;
+        color: lightgray;
+      }
+    </style>
+
+    <script>
+      new Vue ({
+        el: "#todo-field",
+        data: {
+          addItem: "",
+          todolist: [
+            {done: false, text: "ビデオを返却"},
+            {done: false, text: "買い物する"}
+          ]
+        },
+
+        computed: {
+          remaining: function() {
+            return this.todolist.filter(function(val) {
+            // todolistの配列内でdone属性がtrueの要素数を取得
+              return val.done;
+            }).length;
+          }
+        },
+
+        methods: {
+          addList: function() {
+            this.todolist.push({done: false,text: this.addItem});
+            this.addtext = "";
+          },
+
+          cleanToDo: function() {
+            this.todolist = this.todolist.filter(function(val) {
+              return val.done == false;
+            })
+          }
+        }
+      })
+    </script>
+  </body>
