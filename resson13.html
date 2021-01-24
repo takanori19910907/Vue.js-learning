@@ -1,0 +1,87 @@
+<!DOCTYPEhtml>
+<html>
+  <head>
+    <metacharset="UTF8">
+    <title>Vue.jssample</title>
+    <linkrel="stylesheet"href="style.css">
+    <script
+      src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js">
+    </script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.1/TweenMax.min.js"></script>
+  </head>
+
+  <body>
+    <div id="vue-practice">
+      <transition-group>
+        <li v-for="item in dataArray" v-bind:key="item"> {{ item }}</li>
+      </transition-group>
+
+      <label><input v-model="addItem" placeholder="追加するリスト"></label>
+      <button v-on:click="addList">追加</button>
+      <button v-on:click="removeLast">最後の１つを削除</button>
+      <li><button v-on:click="sortUp(dataArray)">昇順に並び替え</button></li>
+      <li><button v-on:click="sortDown(dataArray)">降順に並び替え</button></li>
+      <li><button v-on:click="sortRandom">ランダムに並び替え</button></li>
+    </div>
+
+    <style>
+      .v-enter-active,.v-leave-active {
+        transition:0.5s;
+      }
+
+      .v-enter,.v-leave-to {
+        opacity:0;
+        transform: translateX(50px);
+      }
+
+      .v-move {
+        transition: 0.5s;
+      }
+    </style>
+
+    <script>
+      new Vue ({
+        el: "#vue-practice",
+        data: {
+          dataArray: ["あ","い","う"],
+          addItem: ""
+        },
+
+        methods: {
+          addList: function() {
+            this.dataArray.push(this.addItem);
+          },
+
+          removeLast: function() {
+            var lastIdx = this.dataArray.length - 1;
+            this.dataArray.splice(lastIdx, 1);
+          },
+
+          sortUp: function(data) {
+            data.sort(function(a,b) {
+              return (a < b ? -1 : 1);
+            });
+          },
+
+          sortDown: function(data) {
+            data.sort(function(a,b) {
+              return (a > b ? -1 : 1);
+            });
+          },
+
+          sortRandom: function() {
+            var buffer = [];
+            var length = this.dataArray.length;
+            for (var i=length; length>0; length--) {
+              var r = Math.floor(Math.random() * length );
+              buffer.push(this.dataArray[r]);
+              this.dataArray.splice(r, 1);
+              }
+              this.dataArray = buffer;
+            },
+        }
+      })
+    </script>
+  </body>
+</html>
