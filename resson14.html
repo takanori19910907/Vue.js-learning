@@ -1,0 +1,44 @@
+<!DOCTYPEhtml>
+<html>
+  <head>
+    <metacharset="UTF8">
+    <title>Vue.jssample</title>
+    <linkrel="stylesheet"href="style.css">
+    <script
+      src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js">
+    </script>
+  </head>
+
+  <body>
+    <div id="vue-practice">
+      <!-- ①コンポーネントのタグ名を決めて書く -->
+      <my-component v-for="(item, index) in myArray" v-bind:my-name="item"></my-component>
+    </div>
+
+    <script>
+      // ②コンポーネントとして使用するためのオブジェクトを作成、data(初期値)やmethods(役割)もここで定義しておく
+      var MyComponent = {
+        template: "<p>私は {{ myName }}です</p>",
+      // コンポーネントの場合functionを使用して書く
+          props: {
+            myName: String
+          },
+          created: function() {
+            if (this.myName == null) {
+              this.myName = "名無しの権兵衛";
+            }
+          }
+        }
+      // ③事前に作成したコンポーネントオブジェクトをセット。コンポーネント使用の場合、ここ(vueインスタンス)ではHTMLと繋げるための設定を書く
+      new Vue ({
+        el: "#vue-practice",
+        components: {
+          "my-component": MyComponent
+        },
+        data: {
+          myArray: ["太郎","二郎","三郎","四郎"]
+        }
+      })
+    </script>
+  </body>
+</html>
