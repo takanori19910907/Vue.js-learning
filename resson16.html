@@ -1,4 +1,3 @@
-
 <!DOCTYPEhtml>
 <html>
   <head>
@@ -10,19 +9,17 @@
     </script>
   </head>
   <body>
-    <h2>クリックしたらカウントアップ</h2>
-    <div id="app"><p>{{count}}回</p>
-      <button v-on:click="countUp">カウント</button>
+    <div id="vue-practice">
     </div>
     <script>
-      new Vue({
-        el:"#app",
-        data:{count:0},
-        methods:{countUp:function(){
-          this.count++;
+      new Vue ({
+        el: "#vue-practice",
+        data: {
+
+        },
+        methods: {
+
         }
-      }
-    })
+      })
     </script>
   </body>
-</html>
