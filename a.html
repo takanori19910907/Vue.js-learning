@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta charset="utf-8">
+    <title>ログインページ</title>
+    </head>
+    <style>
+        h1 {
+            font-size: 32px;
+            margin: 0px;
+            padding: 4px;
+            color: #222288;
+        }
+        #second-life {
+            height: 200px;
+            width: 300px;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            margin-top: -100px;
+            margin-left: -150px;
+            text-align: center;
+            }
+        </style>
+        
+    <script>
+        var email = form1.user_email.value;
+        var password = form1.user_password.value;
+        
+        function check(){
+            var email = form1.user_email.value;
+            var password = form1.user_password.value;
+            var reg = /\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/
+
+            if (email == "" || password ==""){
+                alert("必要事項が入力されていません"); 
+                return false;    
+
+            }else if (email.length < 5 || email.length > 128){
+                alert("メールアドレスは5文字〜128文字の範囲内で入力してください");  
+                return false;
+
+            }else if (password.length < 8 || password.length > 64){
+                alert("パスワードは8文字〜64文字の範囲内で入力してください");  
+                return false;  
+
+            }else if (email.match(reg)==null){
+                alert("無効なメールアドレスです");  
+                return false; 
+            }else{
+                return true;  
+            }
+        }
+    </script>
+    <body>
+            <h1>ログイン</h1>
+            <form id="form1" name="form1" method="get" action="auth">
+                    <ul id="second-life">
+                    <div>
+                        <label for="user_email" class="label">E メールアドレス</label>   
+                        <input type="text" id="user_email" name="user_email">                     
+                    </div>
+                    <div>
+                        <label for="user_password">パスワード</label>
+                        <input type="password" id="user_password" name="user_password">
+                    </div>
+
+                    <div>
+                        <input type="submit" id="submit" name="submit" value="ログイン" onClick="return check();">
+                    </div>
+                </åul>
+            </form>
+    <body>
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <title>ログインページ</title>
+  </head>
+  <body>
+    <style>
+      h1{
+      text-align: center;
+      }
+      
+      .form_area {
+      text-align: center;
+      width: 80% ;
+      margin: 20px;
+      }
+      
+      .form_list {
+      margin: 20px 0;
+      }
+      
+      .form {
+      float: right;
+      width: 500px;
+      font-size: 18px;
+      }
+      
+      .form_submit {
+      text-align: center;
+      margin-top: 50px;
+      }
+      
+      .label {
+      display: inline-block;
+      width: 50px;
+      color: white;
+      background-color: red;
+      }
+    </style>
+      
+    <h1>ログイン</h1>
+    <form id="form1" name="form1" method="get" action="auth">
+      <div class="form_area">
+        
+        <div class="form_list">
+          <span class="label">必須</span>
+          <label for="user_email">E メールアドレス</label>
+          <input type="text" class="form" id="user_email" name="user_email">
+        </div>
+        
+        <div class="form_list">
+          <span class="label" >必須</span>
+          <label for="user_password">パスワード</label>
+          <input type="password" class="form" id="user_password" name="user_password">
+        </div>
+        
+        <div class="form_submit">
+          <input type="submit" id="submit" name="submit" disabled value="ログイン">
+        </div>
+      </div>
+    </form>
+
+    <script>
+      var submit = document.querySelector("#submit");
+      submit.disabled = true;
+      var flag1 = 0;
+      var flag2 = 0;
+      var password = document.getElementById("user_password");
+      var email = document.getElementById("user_email");
+      var emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
+
+      password.addEventListener("change",function(){
+        if (password.value.length < 8 || password.value.length > 64 ) {
+          alert("5文字以上128文字以下で入力してください");
+          flag1 = 0;
+        } else {
+          flag1 = 1;
+        }
+
+        if(flag1=== 1 && flag2 === 1) {
+          submit.disabled = false;
+        }
+      });
+
+      email.addEventListener("change",function(){
+        if (email.value.length < 5 || email.value.length > 128 ) {
+          alert("5文字以上128文字以下で入力してください");
+          flag2 = 0;
+        } 
+
+        if(emailRegex.test(email.value)) {
+        submit.disabled = false; 
+        flag2 = 1;
+        } else if(email.value.length > 0){
+          alert("入力されたメールアドレスは無効な形式です");
+          flag2 = 0;
+        }
+
+        if(flag1=== 1 && flag2 === 1) {
+          submit.disabled = false;
+        } else {
+          submit.disabled = true;
+        }
+      });
+    </script>
+  </body>
+</html>

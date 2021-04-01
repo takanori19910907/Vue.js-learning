@@ -1,0 +1,125 @@
+<!-- <!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="utf-8">
+　<title>グラフ</title>
+</head>
+<body>
+  <h1>折れ線グラフ</h1>
+  <canvas id="myLineChart"></canvas>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+
+  <script>
+  var ctx = document.getElementById("myLineChart");
+  var myLineChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: ['8月1日', '8月2日', '8月3日', '8月4日', '8月5日', '8月6日', '8月7日'],
+      datasets: [
+        {
+          label: '最高気温(度）',
+          data: [35, 34, 37, 35, 34, 35, 34, 25],
+          borderColor: "rgba(255,0,0,1)",
+          backgroundColor: "rgba(0,0,0,0)"
+        },
+        {
+          label: '最低気温(度）',
+          data: [25, 27, 27, 25, 26, 27, 25, 21],
+          borderColor: "rgba(0,0,255,1)",
+          backgroundColor: "rgba(0,0,0,0)"
+        }
+      ],
+    },
+    options: {
+      title: {
+        display: true,
+        text: '気温（8月1日~8月7日）'
+      },
+      scales: {
+        yAxes: [{
+          ticks: {
+            suggestedMax: 40,
+            suggestedMin: 0,
+            stepSize: 10,
+            callback: function(value, index, values){
+              return  value +  '度'
+            }
+          }
+        }]
+      },
+    }
+  });
+  </script>
+</body>
+
+</html> -->
+
+<!DOCTYPEhtml>
+<html>
+  <head>
+    <metacharset="UTF8">
+    <title>study-record-app</title>
+    <script
+      src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js">
+    </script>
+  </head>
+  <body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+
+<div id="app">
+	<canvas id="chart"></canvas>
+</div>
+    <script>
+      //グラフの値
+      new Vue({
+        el: '#app',
+        data: {
+          chartLists: [
+            { name: 'たんぱく質', color: '#2ecc71', data: 10 },
+            { name: '炭水化物', color: '#3498db', data: 30 },
+            { name: 'ビタミンA', color: '#95a5a6', data: 3 },
+            { name: 'ビタミンB', color: '#9b59b6', data: 17 }
+          ]
+        },
+        methods: {
+          listCategoryCreat: function (target) {
+            //グラフを描画するために連想配列を普通の配列に変換
+            var targetList = this.chartLists.map(function (arr) {
+              return [arr[target]]
+            }).reduce(function (a, b) {
+              return a.concat(b);
+            });
+
+            return targetList;
+          },
+          creatChart: function () {
+            var labelList = this.listCategoryCreat('name');
+            var colorList = this.listCategoryCreat('color');
+            var dataList = this.listCategoryCreat('data');
+
+            //グラフ描画
+            config = {
+              type: 'pie',
+              data: {
+                labels: labelList,
+                datasets: [{
+                  backgroundColor: colorList,
+                  data: dataList
+                }]
+              }
+            };
+            chart = new Chart(document.getElementById('chart').getContext('2d'), config);
+          }
+        },
+        mounted: function () {
+          //画面読み込み時に実行
+          this.creatChart();
+        }
+
+      });
+    </script>
+  </body>
+</html>

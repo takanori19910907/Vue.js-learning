@@ -17,8 +17,10 @@
         <li v-for="item in dataArray" v-bind:key="item"> {{ item }}</li>
       </transition-group>
 
-      <label><input v-model="addItem" placeholder="追加するリスト"></label>
-      <button v-on:click="addList">追加</button>
+      <label>
+        <input v-model="addItem" placeholder="追加するリスト">
+        <button v-on:click="addList">追加</button>
+      </label>
       <button v-on:click="removeLast">最後の１つを削除</button>
       <li><button v-on:click="sortUp(dataArray)">昇順に並び替え</button></li>
       <li><button v-on:click="sortDown(dataArray)">降順に並び替え</button></li>

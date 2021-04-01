@@ -1,0 +1,106 @@
+<!DOCTYPEhtml>
+<html>
+  <head>
+    <metacharset="UTF8">
+    <title>Vue.jssample</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+    <script type="text/javascript"src="https://www.gstatic.com/charts/loader.js"></script>
+  </head>
+  <body>
+    <h3>学習グラフ</h3>
+    <div id="chart_1" style="height: 300px; width: 250px;"></div>
+    <div id="chart_2" style=" height: 200px; width: 250px;"></div>
+
+    <div id="app">
+
+    <p>学習記録を追加しよう!</p>
+    <li v-for="item in lang" :key="item">
+      {{item[0]}} :
+      <input type="number">
+      <button v-on:click="clickEvent">決定</button>
+    </li>
+    <p>言語別学習時間</p>
+    <p v-for="time in lang">{{time[0]}} : {{ time[1] }}分<p>
+    <p>{{ time }}に変更</p>
+    </div>
+
+    <script>
+      var orgdata = [
+            ["学習言語","時間"],
+            ["HTML",1],
+            ["CSS",1]
+      ]
+
+      var orgdata2 = [
+        ["日付","HTML","CSS","javascript"],
+        [new Date(2020,10,01),0,0,60],
+        [new Date(2020,10,20),20,0,0],
+        [new Date(2020,11,30),60,80,0]
+      ]
+
+      var now = new Date();
+      var year = now.getFullYear();
+      var mon = now.getMonth()+1;
+	    var day = now.getDate();
+　　　
+    　//ライブラリの読み込みを実行
+      google.charts.load("current",{packages: ["corechart"]});
+      // 読み込み後、関数drawchartを実行
+      google.charts.setOnLoadCallback(drawPie);
+      google.charts.setOnLoadCallback(drawLine);
+
+
+      function drawPie() {
+        var data =　google.visualization.arrayToDataTable(orgdata);
+        var options = {
+          title: "学習比率",
+          "is3D": true
+        };
+        var chart1 = new　google.visualization.PieChart(document.getElementById("chart_1"));
+        chart1.draw(data, options);
+      }
+
+      function drawLine() {
+        var data =　google.visualization.arrayToDataTable(orgdata2);
+        var options = {
+          title: "学習推移",
+          hAxis: {title: "実施年月"},
+          vAxis: {title: "学習時間"},
+          curveType: "function",
+          pointSize: 3
+        };
+        var chart2 = new google.visualization.LineChart(document.getElementById('chart_2'));
+        chart2.draw(data, options);
+      }
+
+      var vm = new Vue ({
+        el: "#app",
+        data: {
+          totalRecord: [],
+          time: [],
+          selectedLang: "",
+          learnTime: 0,
+          lang: orgdata,
+          learntime: [
+            30,
+            60
+          ]
+        },
+
+        methods: {
+          clickEvent: function(idx) {
+            // var time = this.learnTime;
+            // var obj = this.lang[idx];
+            // obj[1] += time;
+            // this.lang.splice(idx,1,obj);
+            // var today = new Date();
+            // this.lang[0] = today;
+            console.log(vm);
+
+            drawPie();
+            drawLine();
+          }
+        }
+      })
+    </script>
+  </body>
